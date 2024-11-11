@@ -175,6 +175,9 @@ grid_lon, grid_lat = np.meshgrid(
     np.linspace(min_lat, max_lat, 500)
 )
 
+# calculate Bouguer Anomaly value
+df['Bouguer_Anomaly'] = df['Magnitude'] * (df['DEPTH'] / 10)
+
 # Interpolate outliers onto a grid
 grid_anomaly = griddata(
     (df['Longitude'], df['Latitude']),
