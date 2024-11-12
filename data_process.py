@@ -21,8 +21,6 @@ print(f"File with 2022 and 2023 data saved to {output_file_path}")
 df_2023['Latitude'] = pd.to_numeric(df_2023['Latitude'], errors='coerce')
 df_2023['Longitude'] = pd.to_numeric(df_2023['Longitude'], errors='coerce')
 
-# Remove rows containing NaN
-df_2023 = df_2023.dropna(subset=['Latitude', 'Longitude'])
 
 # Calculate Euclidean distance between points
 coordinates = df_2023[['Latitude', 'Longitude']].values
@@ -32,9 +30,9 @@ distances = cdist(coordinates, coordinates)
 distances[distances == 0] = float('inf')
 
 # Calculate the minimum, maximum and median
-min_distance = distances.min()
-max_distance = distances.max()
-median_distance = pd.DataFrame(distances[distances != float('inf')]).median().median()  # Remove infinite values ​​to calculate the median
+min_distance = distances[distances != float('inf')].min()
+max_distance = distances[distances != float('inf')].max()
+median_distance = pd.DataFrame(distances[distances != float('inf')]).median().median()
 
 print(f"Minimum distance: {min_distance:.5f}")
 print(f"Maximum distance: {max_distance:.5f}")
